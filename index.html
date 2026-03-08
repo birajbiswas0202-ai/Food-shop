@@ -356,6 +356,7 @@
             <div class="input-group">
                 <input type="text" id="userName" placeholder="Full Name">
                 <input type="email" id="userEmail" placeholder="Email Address">
+                <input type="tel" id="userPhone" placeholder="Phone Number">
                 <textarea id="userAddress" placeholder="Delivery Address" rows="2"></textarea>
             </div>
             <button class="submit-btn" onclick="saveUserDetails()">Update Account</button>
@@ -402,6 +403,7 @@
                 const user = JSON.parse(savedUser);
                 document.getElementById('userName').value = user.name || '';
                 document.getElementById('userEmail').value = user.email || '';
+                document.getElementById('userPhone').value = user.phone || '';
                 document.getElementById('userAddress').value = user.address || '';
             }
 
@@ -570,10 +572,11 @@
         function saveUserDetails() {
             const name = document.getElementById('userName').value.trim();
             const email = document.getElementById('userEmail').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
             const address = document.getElementById('userAddress').value.trim();
-            if(!name || !email || !address) return alert("Please fill all details to continue.");
+            if(!name || !email || !phone || !address) return alert("Please fill all details to continue.");
             
-            localStorage.setItem('foodShopUser', JSON.stringify({name, email, address}));
+            localStorage.setItem('foodShopUser', JSON.stringify({name, email, phone, address}));
             toggleModal('userModal');
             vibrate();
             
@@ -607,6 +610,7 @@
             emailjs.send('service_n0rlufv', 'template_5z1za9p', {
                 user_name: userData.name,
                 user_email: userData.email,
+                user_phone: userData.phone,
                 user_address: userData.address,
                 order_details: orderSummary,
                 total_amount: total,
